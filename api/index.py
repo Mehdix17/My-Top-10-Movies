@@ -20,7 +20,7 @@ load_dotenv()
 SECRET_KEY = os.getenv("SECRET_KEY")
 DATABASE_URI = os.getenv("DATABASE_URI")
 
-app = Flask(__name__, template_folder=template_dir, static_folder=static_dir)
+app = Flask(__name__, template_folder=template_dir, static_folder=static_dir, instance_path="/tmp")
 app.config['SECRET_KEY'] = SECRET_KEY
 app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URI
 Bootstrap5(app)
