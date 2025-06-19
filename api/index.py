@@ -93,12 +93,12 @@ movies = [
     )
 ]
 
-# with app.app_context():
-#     db.create_all()
+with app.app_context():
+    db.create_all()
 
-#     for movie in movies:
-#         db.session.add(movie)
-#     db.session.commit()
+    for movie in movies:
+        db.session.add(movie)
+    db.session.commit()
 
 # Edit Form
 class MovieForm(FlaskForm):
