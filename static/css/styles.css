@@ -188,6 +188,13 @@ p.overview {
   background-color: rgba(230, 87, 230, 0.25);
   box-shadow: 0 0 10px 10px rgba(230, 87, 230, 0.25);
 }
+.button.reset-button {
+  background: linear-gradient(135deg, #0f9d58, #0b8043); /* Darker greens */
+}
+.button.reset-button:before {
+  background-color: rgba(15, 157, 88, 0.25);
+  box-shadow: 0 0 10px 10px rgba(15, 157, 88, 0.25);
+}
 .button:hover {
   transform: translateZ(55px);
 }

@@ -6,6 +6,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
+    <link rel="shortcut icon" href="static/favicon.ico" type="image/x-icon" />
 
     {% block styles %} {{ bootstrap.load_css() }}
     <link
@@ -34,5 +35,48 @@
     <br />
     {% block content %}{% endblock %}
     <br />
+    <!-- Toast Container -->
+    <!-- Toast Container -->
+    <div
+      class="toast-container position-fixed bottom-0 end-0 p-3"
+      style="z-index: 1055"
+    >
+      {% with messages = get_flashed_messages(with_categories=true) %} {% for
+      category, message in messages %}
+      <div
+        class="toast text-bg-{{ category }}"
+        role="alert"
+        aria-live="assertive"
+        aria-atomic="true"
+        data-bs-delay="1500"
+        data-bs-autohide="true"
+      >
+        <div class="d-flex">
+          <div class="toast-body">{{ message }}</div>
+          <button
+            type="button"
+            class="btn-close btn-close-white me-2 m-auto"
+            data-bs-dismiss="toast"
+            aria-label="Close"
+          ></button>
+        </div>
+      </div>
+      {% endfor %} {% endwith %}
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const toasts = document.querySelectorAll(".toast");
+        toasts.forEach((toastEl) => {
+          const toast = new bootstrap.Toast(toastEl);
+          toast.show();
+        });
+      });
+    </script>
   </body>
 </html>
