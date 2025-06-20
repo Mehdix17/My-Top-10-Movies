@@ -109,9 +109,9 @@ def add_default_movies():
     db.session.commit()
 
 # Initialise the database (only the first time)
-with app.app_context():
-    db.create_all()
-    add_default_movies()
+# with app.app_context():
+#     db.create_all()
+#     add_default_movies()
 
 # Edit Form
 class MovieForm(FlaskForm):
