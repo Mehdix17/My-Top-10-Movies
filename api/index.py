@@ -21,7 +21,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 TMDB_API_KEY = os.getenv("TMDB_API_KEY")
 TMDB_URL = os.getenv("TMDB_URL")
 
-# In deployement
+# In deployment
 app = Flask(__name__, template_folder=template_dir, static_folder=static_dir, instance_path="/tmp")
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///tmp/movies.db"
 
