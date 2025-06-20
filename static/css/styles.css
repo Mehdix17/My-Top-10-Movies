@@ -30,7 +30,7 @@ body {
 }
 p.overview {
   font-size: 18px;
-  height: 120px;
+  height: 140px;
   width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
