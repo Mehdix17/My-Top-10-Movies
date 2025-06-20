@@ -1,68 +1,54 @@
-# 🎬 My Top 10 Movies
+# 🎬 My Top Movies
 
-A clean, modern Flask web app to manage your personal list of top 10 favorite movies.  
-You can add, edit, delete and rank movies, as well as include ratings, reviews, and poster images.
+A responsive Flask web application to manage your favorite movies.
 
-<br/>
+Search for movies via the [TMDb API](https://developer.themoviedb.org/), add them manually, edit, delete, or reset movies. Built with PostgreSQL, Bootstrap 5, and Flask.
 
-## 🧰 Tech Stack
-
-- 🐍 Python 3
-- 🧪 Flask & Flask-Bootstrap 5
-- 🗃️ SQLite (with SQLAlchemy ORM)
-- 🎨 Jinja2 templating
-- ✍️ WTForms for secure form handling
-- 📦 dotenv for config management
-
-<br/>
+<br>
 
 ## 🚀 Features
 
-- 📌 Add movies by title
-- ✏️ Edit details like rating, review, and ranking
-- 🔥 Auto-sort by ranking (from 1 to 10)
-- 🖼 Upload poster image via URL
-- 🗑 Delete movies from the list
-- 💾 Persistent database with SQLAlchemy
+- 🔍 Search movies by title (using TMDb API)
+- 📝 Manually add movies
+- 🖼️ View top movies ranked with poster, rating, and description
+- ✏️ Edit movie details
+- 🗑️ Delete movies
+- 🔄 Reset to default movie list
+- 🍞 Toast notifications using Bootstrap 5
+- 💾 PostgreSQL database support (e.g. Supabase)
 
-<br/>
+<br>
 
-## 📁 Project Structure
+## 🧰 Tech Stack
 
-├── main.py \
-├── .env \
-├── static/ \
-│ └── img/ \
-├── templates/ \
-│ ├── index.html \
-│ ├── edit.html \
-│ └── add.html \
-├── requirements.txt \
-└── README.md
+- **Backend**: Flask, SQLAlchemy, Flask-WTF
+- **Frontend**: HTML5, Bootstrap 5, Jinja2
+- **Database**: PostgreSQL (via Supabase or local setup)
+- **API Integration**: TMDb (The Movie Database)
 
-<br/>
+<br>
 
-## 🛠 2. Create and activate a virtual environment (recommended)
+## 🛠️ Setup Instructions
 
-python -m venv venv \
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+### 1. Clone the Repository
 
-<br/>
+git clone https://github.com/Mehdix17/My-Top-Movies.git \
+cd My-Top-Movies
 
-## 📦 3. Install dependencies
+### 2. Install Dependencies
 
 pip install -r requirements.txt
 
-<br/>
+### 3. Create a .env File
 
-## 🔐 4. Add a .env file with:
+SECRET_KEY=your-secret-key \
+DATABASE_URI=postgresql://<user>:<password>@<host>/<db> \
+TMDB_API_KEY=your_tmdb_api_key \
+TMDB_URL=https://api.themoviedb.org/3/search/movie
 
-SECRET_KEY=your_secret_key \
-DATABASE_URI=sqlite:///movies.db
+⚠️ Use a .env file to keep credentials safe and use python-dotenv to load them.
 
-<br/>
+### 4. Run the App
 
-## ▶️ 5. Run the app
-
-python main.py \
-Then go to http://127.0.0.1:5000 in your browser.
+python index.py \
+Then open http://localhost:5000 in your browser.
