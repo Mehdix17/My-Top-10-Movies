@@ -20,27 +20,23 @@ load_dotenv()
 SECRET_KEY = os.getenv("SECRET_KEY")
 TMDB_API_KEY = os.getenv("TMDB_API_KEY")
 TMDB_URL = os.getenv("TMDB_URL")
+DATABASE_URI = os.getenv("DATABASE_URI")
 
-# In deployment
+# Create App
 app = Flask(__name__, template_folder=template_dir, static_folder=static_dir, instance_path="/tmp")
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///tmp/movies.db"
-
-# In development
-# app = Flask(__name__, template_folder=template_dir, static_folder=static_dir)
-# app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///movies.db"
-
+app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URI
 app.config['SECRET_KEY'] = SECRET_KEY
 Bootstrap5(app)
 current_year = datetime.now().year
 
-# CREATE DB
+# Create DB
 class Base(DeclarativeBase):
   pass
 
 db = SQLAlchemy(model_class=Base)
 db.init_app(app)
 
-# CREATE TABLE
+# Create Movie Table
 class Movie(db.Model):
     id: Mapped[int] = mapped_column(Integer, primary_key=True) 
     title: Mapped[str] = mapped_column(String(250), unique=True) 
@@ -102,7 +98,7 @@ def add_default_movies():
     ])
     db.session.commit()
 
-# execute only the first time
+# Initialise the database (only the first time)
 with app.app_context():
     db.create_all()
     add_default_movies()
@@ -117,6 +113,7 @@ class MovieForm(FlaskForm):
     review = wtf.TextAreaField("Review", validators=[DataRequired(), Length(max=70)])
     img_url = wtf.StringField("Image URL", validators=[DataRequired()])
     submit = wtf.SubmitField("Save")
+
 
 class AddMovieForm(FlaskForm):
     title = wtf.StringField("Movie Title", validators=[DataRequired()])
