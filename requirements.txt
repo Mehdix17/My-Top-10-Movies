@@ -9,4 +9,3 @@ SQLAlchemy==2.0.25
 dotenv
 requests
 psycopg2-binary
-

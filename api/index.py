@@ -48,6 +48,16 @@ class Movie(db.Model):
     img_url: Mapped[str] = mapped_column(String(250))
 
 
+def set_movie(movie, form):
+    movie.title = form.title.data
+    movie.year = form.year.data
+    movie.description = form.description.data
+    movie.rating = form.rating.data
+    movie.ranking = form.ranking.data
+    movie.review = form.review.data
+    movie.img_url = form.img_url.data
+    db.session.commit()
+
 def add_default_movies():
     db.session.add_all([
         Movie(
@@ -116,8 +126,8 @@ class MovieForm(FlaskForm):
 
 
 class AddMovieForm(FlaskForm):
-    title = wtf.StringField("Movie Title", validators=[DataRequired()])
-    submit = wtf.SubmitField("Search")
+    title = wtf.StringField("By his Title", validators=[DataRequired()])
+    title_submit = wtf.SubmitField("Search")
 
 
 @app.route("/")
@@ -132,14 +142,7 @@ def edit(movie_id):
     form = MovieForm(obj=movie)
     if request.method == "POST":
         if form.validate_on_submit():
-            movie.title = form.title.data
-            movie.year = form.year.data
-            movie.description = form.description.data
-            movie.rating = form.rating.data
-            movie.ranking = form.ranking.data
-            movie.review = form.review.data
-            movie.img_url = form.img_url.data
-            db.session.commit()
+            set_movie(movie, form)
             flash("Movie updated successfully", "info")
             return redirect(url_for("home"))
     return render_template("edit.html", form=form, movie=movie)
@@ -156,23 +159,33 @@ def delete(movie_id):
 
 @app.route("/add", methods=['GET', 'POST'])
 def add():
-    form = AddMovieForm()
-    if request.method == 'GET':
-        return render_template("add.html", form=form)
-    else:
-        if form.validate_on_submit():
+    form1 = AddMovieForm()
+    form2 = MovieForm()
+
+    if request.method == 'POST':
+        if "title_submit" in request.form and form1.validate_on_submit():
             params = {
-                "query": form.data.get("title"),
+                "query": form1.title.data,
                 "api_key": TMDB_API_KEY,
                 "language": "en-US"
             }
             response = requests.get(TMDB_URL, params=params)
             data = response.json()
-            results = data["results"]
+            results = data.get("results", [])
             if not results:
                 flash("Movie Not Found", "danger")
-                return render_template("add.html",form=form)  
+                return redirect(url_for("add"))
             return render_template("select.html", movies=results)
+
+        elif "submit" in request.form and form2.validate_on_submit():
+            new_movie = Movie()
+            set_movie(new_movie, form2)
+            db.session.add(new_movie)
+            db.session.commit()
+            flash("Movie added successfully", "primary")
+            return redirect(url_for("home"))
+
+    return render_template("add.html", form1=form1, form2=form2)
 
 
 @app.route("/select", methods=['GET', 'POST'])
